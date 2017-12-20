@@ -3,7 +3,7 @@
  */
 const reParse = /^.*?[/\\]?(?=([^\/\\]*$))/;
 const pathTool = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const _baseMapper={}
 //const reParse=/^[^,]*[/\\](?=([^\/\\]*$|([\w_.!@*^\/\\-]+,)*[\w_.!@*^\/\\-]+$))/;
 const generateEliminated = (path, file) => {
@@ -112,7 +112,6 @@ const findSource = (path, source, options = {}) => {
     }
     parsed.fileList.forEach((file)=> {
         let p = pathTool.resolve(path, file);
-
         if (fs.existsSync(p) && !isEliminated(parsed.eliminated, file)) {
             let stat = fs.statSync(p);
             if (stat.isDirectory()) {
@@ -181,19 +180,14 @@ const scanDir = (root, path, wildcard, eliminated, notrecursive) => {
     });
     return fileList;
 }
-/*console.log(parse('abc'));
- console.log(parse('abc/'));
- console.log(parse('abc/xxx'));
- console.log(parse('/abc'));
- console.log(parse('/abc/abcd.js,abc'));
- console.log(parse('/abc/abcd.js,abc,**'));
- console.log(parse('/abc/abcd.js,abc,*'));
- console.log(parse('/abc/abcd.js,abc,*.js,*.vue'));
- console.log(parse('/abc/abcd.js,abc,^*.js'));
- console.log(parse('/abc/abcd.js,^abc,*.js,^**'));
- console.log(parse('^/abc/abcd.js,abc,*.js,**.abc'));*/
-/*console.log(findSource('../', ['weex-builder/!*', '^weex-builder/!**!/node_modules']))*/
-exports.find = findSource;
-exports.base= (source) => {
+
+const find = findSource;
+
+const base= (source) => {
     return _baseMapper[source]||''
+}
+
+module.exports = {
+  find,
+  base
 }
