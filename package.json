@@ -1,0 +1,11 @@
+{
+  "name": "source-finder",
+  "version": "1.0.0",
+  "description": "Get a list of all the files in the folder for Nodejs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "erha19",
+  "license": "ISC"
+}
